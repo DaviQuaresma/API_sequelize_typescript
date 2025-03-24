@@ -1,0 +1,35 @@
+{
+  "name": "api_sequelize_typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "ts-node-dev src/app.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaviQuaresma/API_sequelize_typescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DaviQuaresma/API_sequelize_typescript/issues"
+  },
+  "homepage": "https://github.com/DaviQuaresma/API_sequelize_typescript#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "pg": "^8.14.1",
+    "sequelize": "^6.37.6"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.13.11",
+    "sequelize-cli": "^6.6.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.2"
+  }
+}
+
