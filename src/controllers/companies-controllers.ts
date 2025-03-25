@@ -3,7 +3,7 @@
 // src/controllers/companiesController.ts
 
 import { Request, Response } from "express";
-import { Company } from "../models/companie";
+import { Company } from "../models";
 
 const companiesController = {
 	index: async (req: Request, res: Response): Promise<any> => {
@@ -42,7 +42,7 @@ const companiesController = {
 		const { id } = req.params;
 
 		try {
-			const companie = await Company.findByPk(id);
+			const companie = await Company.findByPk(id, { include: 'jobs'});
 
 			return res.json(companie);
 		} catch (err) {
