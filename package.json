@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "type": "commonjs",
-  "scripts": {
-    "dev": "ts-node-dev src/app.ts"
-  },
+"scripts": {
+  "createdb": "npx sequelize-cli db:create",
+  "migrate": "npx sequelize-cli db:migrate",
+  "dev": "npm run createdb && npm run migrate && ts-node-dev src/app.ts"
+},
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DaviQuaresma/API_sequelize_typescript.git"

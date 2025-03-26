@@ -1,61 +1,70 @@
-/** @format */
-
-// src/models/job.ts
-
-import { sequelize } from "../database";
+import { CandidateInstance } from './candidate'
 import {
-	BelongsToMany,
-	BelongsToManyAddAssociationMixin,
-	BelongsToManyCountAssociationsMixin,
-	BelongsToManyRemoveAssociationMixin,
-	DataTypes,
-	Model,
-} from "sequelize";
-import { CandidateInstance } from "./candidate";
+    BelongsToManyAddAssociationMixin,
+    BelongsToManyAddAssociationsMixin,
+    BelongsToManyCountAssociationsMixin,
+    BelongsToManyGetAssociationsMixin,
+    BelongsToManyHasAssociationMixin,
+    BelongsToManyRemoveAssociationMixin,
+    DataTypes,
+    Model,
+    Optional,
+    Sequelize
+} from 'sequelize'
 
-interface JobInstance extends Model {
-	id: number;
-	title: string;
-	description: string;
-	limitDate: Date;
-	companyId: number;
-	addCandidate: BelongsToManyAddAssociationMixin<CandidateInstance, number>;
-	removeCandidate: BelongsToManyRemoveAssociationMixin<
-		CandidateInstance,
-		number
-	>;
-	countCandidateCandidate: BelongsToManyCountAssociationsMixin;
+export interface Job {
+    id: number
+    title: string
+    description: string
+    limitDate: Date
+    companyId: number
 }
 
-const Job = sequelize.define<JobInstance>("jobs", {
-	id: {
-		type: DataTypes.INTEGER,
-		allowNull: false,
-		autoIncrement: true,
-		primaryKey: true,
-	},
-	title: {
-		type: DataTypes.STRING,
-		allowNull: false,
-	},
-	description: {
-		type: DataTypes.TEXT,
-		allowNull: false,
-	},
-	limitDate: {
-		type: DataTypes.DATE,
-		allowNull: false,
-	},
-	companyId: {
-		type: DataTypes.INTEGER,
-		allowNull: false,
-		references: {
-			model: "companies",
-			key: "id",
-		},
-		onUpdate: "CASCADE",
-		onDelete: "RESTRICT",
-	},
-});
+export interface JobCreationAttributes extends Optional<Job, 'id'> { }
 
-export { Job };
+export interface JobInstance extends Model<Job, JobCreationAttributes>, Job {
+    addCandidate: BelongsToManyAddAssociationMixin<CandidateInstance, number>
+    addCandidates: BelongsToManyAddAssociationsMixin<CandidateInstance, number>
+    removeCandidate: BelongsToManyRemoveAssociationMixin<CandidateInstance, number>
+    countCandidates: BelongsToManyCountAssociationsMixin
+    getCandidates: BelongsToManyGetAssociationsMixin<CandidateInstance>
+    hasCandidate: BelongsToManyHasAssociationMixin<CandidateInstance, number>
+}
+
+export default (sequelize: Sequelize) => {
+    const Job = sequelize.define<JobInstance, Job>(
+        'jobs',
+        {
+            id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                autoIncrement: true,
+                primaryKey: true
+            },
+            title: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            description: {
+                type: DataTypes.TEXT,
+                allowNull: false
+            },
+            limitDate: {
+                type: DataTypes.DATE,
+                allowNull: false
+            },
+            companyId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'companies',
+                    key: 'id'
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'RESTRICT'
+            }
+        }
+    )
+
+    return Job
+}

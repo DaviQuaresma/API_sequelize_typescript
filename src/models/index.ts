@@ -1,14 +1,22 @@
-/** @format */
+import { connect } from '../database'
+import candidate from './candidate'
+import company from './company'
+import job from './job'
 
-// src/models/index.ts
+const sequelize = connect()
 
-import { Candidate } from "./candidate";
-import { Company } from "./companie";
-import { Job } from "./job";
+const Candidate = candidate(sequelize)
+const Company = company(sequelize)
+const Job = job(sequelize)
 
-Company.hasMany(Job);
-Job.belongsTo(Company);
-Job.belongsToMany(Candidate, { through: "job_candidates" });
-Candidate.belongsToMany(Job, { through: "job_candidates" });
+Company.hasMany(Job)
+Job.belongsTo(Company)
+Job.belongsToMany(Candidate, { through: 'job_candidates' })
+Candidate.belongsToMany(Job, { through: 'job_candidates' })
 
-export { Candidate, Company, Job };
+export {
+    sequelize,
+    Candidate,
+    Company,
+    Job
+}
